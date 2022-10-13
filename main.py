@@ -32,13 +32,13 @@ async def is_admins(chat_id: int):
 
 @bot.on_message(filters.command("start"))
 async def start(client, message):
-        await message.reply_text("Hi! My name is Sneha. I'm an Artificial Intelligence\n /chatbot - [on|off]")
+        await message.reply_text("Hi! My name is Sneha. I'm an Artificial Intelligence\n /stickerz - [on|off]")
 
 
 @bot.on_message(
-    filters.command("chatbot off", prefixes=["/", ".", "?", "-"])
+    filters.command("stickerz off", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
-async def chatbotofd(client, message):
+async def stickerzofd(client, message):
     vickdb = MongoClient(MONGO_URL)    
     vick = vickdb["VickDb"]["Vick"]     
     if message.from_user:
@@ -53,15 +53,15 @@ async def chatbotofd(client, message):
     is_vick = vick.find_one({"chat_id": message.chat.id})
     if not is_vick:
         vick.insert_one({"chat_id": message.chat.id})
-        await message.reply_text(f"Chatbot Disabled!")
+        await message.reply_text(f"StickerZ Disabled!")
     if is_vick:
-        await message.reply_text(f"ChatBot Is Already Disabled")
+        await message.reply_text(f"StickerZ Is Already Disabled")
     
 
 @bot.on_message(
-    filters.command("chatbot on", prefixes=["/", ".", "?", "-"])
+    filters.command("stickerz on", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
-async def chatboton(client, message):
+async def stickerzon(client, message):
     vickdb = MongoClient(MONGO_URL)    
     vick = vickdb["VickDb"]["Vick"]     
     if message.from_user:
@@ -75,17 +75,17 @@ async def chatboton(client, message):
             )
     is_vick = vick.find_one({"chat_id": message.chat.id})
     if not is_vick:           
-        await message.reply_text(f"Chatbot Is Already Enabled")
+        await message.reply_text(f"StickerZ Is Already Enabled")
     if is_vick:
         vick.delete_one({"chat_id": message.chat.id})
-        await message.reply_text(f"ChatBot Is Enable!")
+        await message.reply_text(f"StickerZ Is Enable!")
     
 
 @bot.on_message(
-    filters.command("chatbot", prefixes=["/", ".", "?", "-"])
+    filters.command("stickerz", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
-async def chatbot(client, message):
-    await message.reply_text(f"**Usage:**\n/chatbot [on|off] only group")
+async def stickerz(client, message):
+    await message.reply_text(f"**Usage:**\n/StickerZ [on|off] only group")
 
 
 @bot.on_message(
