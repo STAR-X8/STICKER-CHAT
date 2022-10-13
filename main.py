@@ -32,7 +32,7 @@ async def is_admins(chat_id: int):
 
 @bot.on_message(filters.command("start"))
 async def start(client, message):
-        await message.reply_text("Hi! My name is Ishi. I'm an Artificial Intelligence\n /chatbot - [on|off]")
+        await message.reply_text("Hi! My name is Sneha. I'm an Artificial Intelligence\n /chatbot - [on|off]")
 
 
 @bot.on_message(
@@ -90,8 +90,7 @@ async def chatbot(client, message):
 
 @bot.on_message(
  (
-        filters.text
-        | filters.sticker
+        filters.sticker
     )
     & ~filters.private
     & ~filters.bot,
@@ -118,8 +117,6 @@ async def vickai(client: Client, message: Message):
                Yo = is_text['check']
                if Yo == "sticker":
                    await message.reply_sticker(f"{hey}")
-               if not Yo == "sticker":
-                   await message.reply_text(f"{hey}")
    
    if message.reply_to_message:  
        vickdb = MongoClient(MONGO_URL)
@@ -141,23 +138,16 @@ async def vickai(client: Client, message: Message):
                    Yo = is_text['check']
                    if Yo == "sticker":
                        await message.reply_sticker(f"{hey}")
-                   if not Yo == "sticker":
-                       await message.reply_text(f"{hey}")
        if not message.reply_to_message.from_user.id == bot_id:          
            if message.sticker:
                is_chat = chatai.find_one({"word": message.reply_to_message.text, "id": message.sticker.file_unique_id})
                if not is_chat:
-                   chatai.insert_one({"word": message.reply_to_message.text, "text": message.sticker.file_id, "check": "sticker", "id": message.sticker.file_unique_id})
-           if message.text:                 
-               is_chat = chatai.find_one({"word": message.reply_to_message.text, "text": message.text})                 
-               if not is_chat:
-                   chatai.insert_one({"word": message.reply_to_message.text, "text": message.text, "check": "none"})    
+                   chatai.insert_one({"word": message.reply_to_message.text, "text": message.sticker.file_id, "check": "sticker", "id": message.sticker.file_unique_id})    
                
 
 @bot.on_message(
  (
         filters.sticker
-        | filters.text
     )
     & ~filters.private
     & ~filters.bot,
@@ -182,8 +172,6 @@ async def vickstickerai(client: Client, message: Message):
                hey = random.choice(K)
                is_text = chatai.find_one({"text": hey})
                Yo = is_text['check']
-               if Yo == "text":
-                   await message.reply_text(f"{hey}")
                if not Yo == "text":
                    await message.reply_sticker(f"{hey}")
    
@@ -205,15 +193,9 @@ async def vickstickerai(client: Client, message: Message):
                    hey = random.choice(K)
                    is_text = chatai.find_one({"text": hey})
                    Yo = is_text['check']
-                   if Yo == "text":
-                       await message.reply_text(f"{hey}")
                    if not Yo == "text":
                        await message.reply_sticker(f"{hey}")
        if not message.reply_to_message.from_user.id == bot_id:          
-           if message.text:
-               is_chat = chatai.find_one({"word": message.reply_to_message.sticker.file_unique_id, "text": message.text})
-               if not is_chat:
-                   toggle.insert_one({"word": message.reply_to_message.sticker.file_unique_id, "text": message.text, "check": "text"})
            if message.sticker:                 
                is_chat = chatai.find_one({"word": message.reply_to_message.sticker.file_unique_id, "text": message.sticker.file_id})                 
                if not is_chat:
@@ -223,8 +205,7 @@ async def vickstickerai(client: Client, message: Message):
 
 @bot.on_message(
     (
-        filters.text
-        | filters.sticker
+        filters.sticker
     )
     & filters.private
     & ~filters.bot,
@@ -244,8 +225,6 @@ async def vickprivate(client: Client, message: Message):
        Yo = is_text['check']
        if Yo == "sticker":
            await message.reply_sticker(f"{hey}")
-       if not Yo == "sticker":
-           await message.reply_text(f"{hey}")
    if message.reply_to_message:            
        getme = await bot.get_me()
        bot_id = getme.id       
@@ -260,14 +239,11 @@ async def vickprivate(client: Client, message: Message):
            Yo = is_text['check']
            if Yo == "sticker":
                await message.reply_sticker(f"{hey}")
-           if not Yo == "sticker":
-               await message.reply_text(f"{hey}")
        
 
 @bot.on_message(
  (
         filters.sticker
-        | filters.text
     )
     & filters.private
     & ~filters.bot,
@@ -285,8 +261,6 @@ async def vickprivatesticker(client: Client, message: Message):
        hey = random.choice(K)
        is_text = chatai.find_one({"text": hey})
        Yo = is_text['check']
-       if Yo == "text":
-           await message.reply_text(f"{hey}")
        if not Yo == "text":
            await message.reply_sticker(f"{hey}")
    if message.reply_to_message:            
@@ -301,8 +275,6 @@ async def vickprivatesticker(client: Client, message: Message):
            hey = random.choice(K)
            is_text = chatai.find_one({"text": hey})
            Yo = is_text['check']
-           if Yo == "text":
-               await message.reply_text(f"{hey}")
            if not Yo == "text":
                await message.reply_sticker(f"{hey}")
        
