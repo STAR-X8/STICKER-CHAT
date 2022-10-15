@@ -14,6 +14,6 @@ The easiest way to deploy this Bot
 
 <p align="center"><a href="https://t.me/silentxworld"> <img src="https://img.shields.io/badge/SILENT%20X%20WORLD-pink?style=for-the-badge" width="220" height="38.45"/></a></p>
 
-<p align="center"><a href="https://t.me/music_world_x"> <img src="https://img.shields.io/badge/MUSIC%20WORLD%20X-blue?style=for-the-badge" width="220" height="38.45"/></a></p>
+<p align="center"><a href="https://t.me/music_world_x"> <img src="https://img.shields.io/badge/MUSIC%20X%20WORLD-blue?style=for-the-badge" width="220" height="38.45"/></a></p>
 
 ## © Copyright - SILENTXWORLD
