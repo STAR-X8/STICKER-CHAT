@@ -30,8 +30,6 @@ async def is_admins(chat_id: int):
     ]
 
 
-
-
 @bot.on_message(
     filters.command("stickerz off", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
