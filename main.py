@@ -10,7 +10,7 @@ import re
 API_ID = os.environ.get("API_ID", None) 
 API_HASH = os.environ.get("API_HASH", None) 
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None) 
-STKR_DB = os.environ.get("MONGO_URL", None)
+MONGO_URL = os.environ.get("MONGO_URL", None)
 
 
 bot = Client(
