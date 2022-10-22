@@ -30,11 +30,17 @@ async def is_admins(chat_id: int):
     ]
 
 
+
+@bot.on_message(filters.command("start"))
+async def start(client, message):
+        await message.reply_text("Hi! My name is Ishi. I'm an Artificial Intelligence\n /chatbot - [on|off]")
+
+
 @bot.on_message(
-    filters.command("stickerz off", prefixes=["/", ".", "?", "-"])
+    filters.command("chatbot off", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def stickerzofd(client, message):
-    vickdb = MongoClient(STKR_DB)    
+    vickdb = MongoClient(MONGO_URL)    
     vick = vickdb["VickDb"]["Vick"]     
     if message.from_user:
         user = message.from_user.id
@@ -43,21 +49,21 @@ async def stickerzofd(client, message):
            await is_admins(chat_id)
         ):
            return await message.reply_text(
-                "ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀᴅᴍɪɴ"
+                "You are not admin"
             )
     is_vick = vick.find_one({"chat_id": message.chat.id})
     if not is_vick:
         vick.insert_one({"chat_id": message.chat.id})
-        await message.reply_text(f"sᴛɪᴄᴋᴇʀᴢ ᴅɪsᴀʙʟᴇᴅ!")
+        await message.reply_text(f"Chatbot Disabled!")
     if is_vick:
-        await message.reply_text(f"sᴛɪᴄᴋᴇʀᴢ ɪs ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀʙʟᴇᴅ")
+        await message.reply_text(f"ChatBot Is Already Disabled")
     
 
 @bot.on_message(
-    filters.command("stickerz on", prefixes=["/", ".", "?", "-"])
+    filters.command("chatbot on", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def stickerzon(client, message):
-    vickdb = MongoClient(STKR_DB)    
+    vickdb = MongoClient(MONGO_URL)    
     vick = vickdb["VickDb"]["Vick"]     
     if message.from_user:
         user = message.from_user.id
@@ -66,22 +72,22 @@ async def stickerzon(client, message):
             await is_admins(chat_id)
         ):
             return await message.reply_text(
-                "ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀᴅᴍɪɴ"
+                "You are not admin"
             )
     is_vick = vick.find_one({"chat_id": message.chat.id})
     if not is_vick:           
-        await message.reply_text(f"sᴛɪᴄᴋᴇʀᴢ ɪs ᴀʟʀᴇᴀᴅʏ ᴇɴᴀʙʟᴇᴅ")
+        await message.reply_text(f"Chatbot Is Already Enabled")
     if is_vick:
         vick.delete_one({"chat_id": message.chat.id})
-        await message.reply_text(f"sᴛɪᴄᴋᴇʀᴢ ɪs ᴇɴᴀʙʟᴇ!")
+        await message.reply_text(f"ChatBot Is Enable!")
     
 
 @bot.on_message(
-    filters.command("stickerz", prefixes=["/", ".", "?", "-"])
+    filters.command("chatbot", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
-async def stickerz(client, message):
-    await message.reply_text(f"**ᴜsᴀɢᴇ:**\n/stickerz [ᴏɴ|ᴏғғ] ᴏɴʟʏ ɢʀᴏᴜᴘ")    
-        
+async def chatbot(client, message):
+    await message.reply_text(f"**Usage:**\n/chatbot [on|off] only group")
+
 
 @bot.on_message(
  (
@@ -92,11 +98,11 @@ async def stickerz(client, message):
 )
 async def vickai(client: Client, message: Message):
 
-   chatdb = MongoClient(STKR_DB)
+   chatdb = MongoClient(MONGO_URL)
    chatai = chatdb["Word"]["WordDb"]   
 
    if not message.reply_to_message:
-       vickdb = MongoClient(STKR_DB)
+       vickdb = MongoClient(MONGO_URL)
        vick = vickdb["VickDb"]["Vick"] 
        is_vick = vick.find_one({"chat_id": message.chat.id})
        if not is_vick:
@@ -114,7 +120,7 @@ async def vickai(client: Client, message: Message):
                    await message.reply_sticker(f"{hey}")
    
    if message.reply_to_message:  
-       vickdb = MongoClient(STKR_DB)
+       vickdb = MongoClient(MONGO_URL)
        vick = vickdb["VickDb"]["Vick"] 
        is_vick = vick.find_one({"chat_id": message.chat.id})    
        getme = await bot.get_me()
@@ -149,11 +155,11 @@ async def vickai(client: Client, message: Message):
 )
 async def vickstickerai(client: Client, message: Message):
 
-   chatdb = MongoClient(STKR_DB)
+   chatdb = MongoClient(MONGO_URL)
    chatai = chatdb["Word"]["WordDb"]   
 
    if not message.reply_to_message:
-       vickdb = MongoClient(STKR_DB)
+       vickdb = MongoClient(MONGO_URL)
        vick = vickdb["VickDb"]["Vick"] 
        is_vick = vick.find_one({"chat_id": message.chat.id})
        if not is_vick:
@@ -171,7 +177,7 @@ async def vickstickerai(client: Client, message: Message):
                    await message.reply_sticker(f"{hey}")
    
    if message.reply_to_message:
-       vickdb = MongoClient(STKR_DB)
+       vickdb = MongoClient(MONGO_URL)
        vick = vickdb["VickDb"]["Vick"] 
        is_vick = vick.find_one({"chat_id": message.chat.id})
        getme = await bot.get_me()
@@ -197,6 +203,7 @@ async def vickstickerai(client: Client, message: Message):
                    chatai.insert_one({"word": message.reply_to_message.sticker.file_unique_id, "text": message.sticker.file_id, "check": "none"})    
                
 
+
 @bot.on_message(
     (
         filters.sticker
@@ -206,7 +213,7 @@ async def vickstickerai(client: Client, message: Message):
 )
 async def vickprivate(client: Client, message: Message):
 
-   chatdb = MongoClient(STKR_DB)
+   chatdb = MongoClient(MONGO_URL)
    chatai = chatdb["Word"]["WordDb"]
    if not message.reply_to_message: 
        await bot.send_chat_action(message.chat.id, "typing")
@@ -244,7 +251,7 @@ async def vickprivate(client: Client, message: Message):
 )
 async def vickprivatesticker(client: Client, message: Message):
 
-   chatdb = MongoClient(STKR_DB)
+   chatdb = MongoClient(MONGO_URL)
    chatai = chatdb["Word"]["WordDb"] 
    if not message.reply_to_message:
        await bot.send_chat_action(message.chat.id, "typing")
