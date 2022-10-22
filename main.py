@@ -36,7 +36,7 @@ async def is_admins(chat_id: int):
     filters.command("stickerz off", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def stickerzofd(client, message):
-    vickdb = MongoClient(MONGO_URL)    
+    vickdb = MongoClient(STKR_DB)    
     vick = vickdb["VickDb"]["Vick"]     
     if message.from_user:
         user = message.from_user.id
@@ -45,21 +45,21 @@ async def stickerzofd(client, message):
            await is_admins(chat_id)
         ):
            return await message.reply_text(
-                "You are not admin"
+                "ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀᴅᴍɪɴ"
             )
     is_vick = vick.find_one({"chat_id": message.chat.id})
     if not is_vick:
         vick.insert_one({"chat_id": message.chat.id})
-        await message.reply_text(f"Stickerz Disabled!")
+        await message.reply_text(f"sᴛɪᴄᴋᴇʀᴢ ᴅɪsᴀʙʟᴇᴅ!")
     if is_vick:
-        await message.reply_text(f"Stickerz Is Already Disabled")
+        await message.reply_text(f"sᴛɪᴄᴋᴇʀᴢ ɪs ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀʙʟᴇᴅ")
     
 
 @bot.on_message(
     filters.command("stickerz on", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def stickerzon(client, message):
-    vickdb = MongoClient(MONGO_URL)    
+    vickdb = MongoClient(STKR_DB)    
     vick = vickdb["VickDb"]["Vick"]     
     if message.from_user:
         user = message.from_user.id
@@ -68,22 +68,22 @@ async def stickerzon(client, message):
             await is_admins(chat_id)
         ):
             return await message.reply_text(
-                "You are not admin"
+                "ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀᴅᴍɪɴ"
             )
     is_vick = vick.find_one({"chat_id": message.chat.id})
     if not is_vick:           
-        await message.reply_text(f"Stickerz Is Already Enabled")
+        await message.reply_text(f"sᴛɪᴄᴋᴇʀᴢ ɪs ᴀʟʀᴇᴀᴅʏ ᴇɴᴀʙʟᴇᴅ")
     if is_vick:
         vick.delete_one({"chat_id": message.chat.id})
-        await message.reply_text(f"Stickerz Is Enable!")
+        await message.reply_text(f"sᴛɪᴄᴋᴇʀᴢ ɪs ᴇɴᴀʙʟᴇ!")
     
 
 @bot.on_message(
     filters.command("stickerz", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def stickerz(client, message):
-    await message.reply_text(f"**Usage:**\n/stickerz [on|off] only group")
-
+    await message.reply_text(f"**ᴜsᴀɢᴇ:**\n/stickerz [ᴏɴ|ᴏғғ] ᴏɴʟʏ ɢʀᴏᴜᴘ")    
+        
 
 @bot.on_message(
  (
@@ -94,11 +94,11 @@ async def stickerz(client, message):
 )
 async def vickai(client: Client, message: Message):
 
-   chatdb = MongoClient(MONGO_URL)
+   chatdb = MongoClient(STKR_DB)
    chatai = chatdb["Word"]["WordDb"]   
 
    if not message.reply_to_message:
-       vickdb = MongoClient(MONGO_URL)
+       vickdb = MongoClient(STKR_DB)
        vick = vickdb["VickDb"]["Vick"] 
        is_vick = vick.find_one({"chat_id": message.chat.id})
        if not is_vick:
@@ -116,7 +116,7 @@ async def vickai(client: Client, message: Message):
                    await message.reply_sticker(f"{hey}")
    
    if message.reply_to_message:  
-       vickdb = MongoClient(MONGO_URL)
+       vickdb = MongoClient(STKR_DB)
        vick = vickdb["VickDb"]["Vick"] 
        is_vick = vick.find_one({"chat_id": message.chat.id})    
        getme = await bot.get_me()
@@ -151,11 +151,11 @@ async def vickai(client: Client, message: Message):
 )
 async def vickstickerai(client: Client, message: Message):
 
-   chatdb = MongoClient(MONGO_URL)
+   chatdb = MongoClient(STKR_DB)
    chatai = chatdb["Word"]["WordDb"]   
 
    if not message.reply_to_message:
-       vickdb = MongoClient(MONGO_URL)
+       vickdb = MongoClient(STKR_DB)
        vick = vickdb["VickDb"]["Vick"] 
        is_vick = vick.find_one({"chat_id": message.chat.id})
        if not is_vick:
@@ -173,7 +173,7 @@ async def vickstickerai(client: Client, message: Message):
                    await message.reply_sticker(f"{hey}")
    
    if message.reply_to_message:
-       vickdb = MongoClient(MONGO_URL)
+       vickdb = MongoClient(STKR_DB)
        vick = vickdb["VickDb"]["Vick"] 
        is_vick = vick.find_one({"chat_id": message.chat.id})
        getme = await bot.get_me()
@@ -209,7 +209,7 @@ async def vickstickerai(client: Client, message: Message):
 )
 async def vickprivate(client: Client, message: Message):
 
-   chatdb = MongoClient(MONGO_URL)
+   chatdb = MongoClient(STKR_DB)
    chatai = chatdb["Word"]["WordDb"]
    if not message.reply_to_message: 
        await bot.send_chat_action(message.chat.id, "typing")
@@ -247,7 +247,7 @@ async def vickprivate(client: Client, message: Message):
 )
 async def vickprivatesticker(client: Client, message: Message):
 
-   chatdb = MongoClient(MONGO_URL)
+   chatdb = MongoClient(STKR_DB)
    chatai = chatdb["Word"]["WordDb"] 
    if not message.reply_to_message:
        await bot.send_chat_action(message.chat.id, "typing")
