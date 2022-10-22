@@ -30,7 +30,6 @@ async def is_admins(chat_id: int):
     ]
 
 
-
 @bot.on_message(filters.command("start"))
 async def start(client, message):
         await message.reply_text("Hi! My name is Sweetie💖. I'm an Sticker Chatbot\n /chatbot - [on|off]")
@@ -39,7 +38,7 @@ async def start(client, message):
 @bot.on_message(
     filters.command("chatbot off", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
-async def stickerzofd(client, message):
+async def chatbotofd(client, message):
     vickdb = MongoClient(MONGO_URL)    
     vick = vickdb["VickDb"]["Vick"]     
     if message.from_user:
@@ -62,7 +61,7 @@ async def stickerzofd(client, message):
 @bot.on_message(
     filters.command("chatbot on", prefixes=["/", ".", "?", "-"])
     & ~filters.private)
-async def stickerzon(client, message):
+async def chatboton(client, message):
     vickdb = MongoClient(MONGO_URL)    
     vick = vickdb["VickDb"]["Vick"]     
     if message.from_user:
@@ -278,5 +277,5 @@ async def vickprivatesticker(client: Client, message: Message):
            Yo = is_text['check']
            if not Yo == "text":
                await message.reply_sticker(f"{hey}")
-       
+
 bot.run()
