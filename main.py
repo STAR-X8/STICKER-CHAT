@@ -197,7 +197,6 @@ async def vickstickerai(client: Client, message: Message):
                    chatai.insert_one({"word": message.reply_to_message.sticker.file_unique_id, "text": message.sticker.file_id, "check": "none"})    
                
 
-
 @bot.on_message(
     (
         filters.sticker
